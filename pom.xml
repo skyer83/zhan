@@ -1,22 +1,180 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>black</groupId>
-  <artifactId>zhan</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>zhan Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <finalName>zhan</finalName>
-  </build>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>black</groupId>
+	<artifactId>zhan</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>zhan Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		
+	    <org.springframework.version>4.3.12.RELEASE</org.springframework.version>
+	    <org.apache.shiro.version>1.4.0</org.apache.shiro.version>
+	</properties>
+
+	<!-- 使用阿里 maven 库 -->
+	<repositories>
+		<repository>
+			<id>ali-maven</id>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+	<!-- 添加快照版本库,updatePolicy: always、daily、interval、never -->
+	<!-- 
+	<repositories>
+    	<repository>
+           <id>sonatype-nexus-snapshots</id>
+           <name>Sonatype Nexus Snapshots</name>
+           <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+           <releases>
+               <enabled>false</enabled>
+           </releases>
+           <snapshots>
+               <enabled>true</enabled>
+               <updatePolicy>daily</updatePolicy>
+           </snapshots>
+       </repository>
+  	</repositories>
+  	-->
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- jdbc驱动包  -->
+	    <dependency>
+	    	<groupId>mysql</groupId>
+	    	<artifactId>mysql-connector-java</artifactId>
+	    	<version>5.1.44</version>
+	    </dependency>
+		<!-- model生成包  -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.29</version>
+		</dependency>
+		<!-- jfinal_s -->
+    	<!--
+			此处的 scope 值为 compile 仅为支持 IDEA 下启动项目
+			打 war 包时需要改成 provided，以免将一些无用的 jar 打进去
+		-->
+	    <!-- 
+	    <dependency>
+	    	<groupId>com.jfinal</groupId>
+	    	<artifactId>jetty-server</artifactId>
+	    	<version>8.1.8</version>
+	    	<scope>compile</scope>
+	    </dependency>
+	     -->
+	    <dependency>
+	    	<groupId>com.jfinal</groupId>
+	    	<artifactId>jfinal</artifactId>
+	    	<version>3.3</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>com.jfinal</groupId>
+	    	<artifactId>cos</artifactId>
+	    	<version>2017.5</version>
+	    </dependency>
+		<!-- jfinal_e -->
+	  	<!-- 添加Servlet支持 -->
+	  	<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<!-- 添加jtl支持 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- 添加log4j支持，JFINAL的日志打印有依赖 -->
+	    <dependency>
+	    	<groupId>log4j</groupId>
+	    	<artifactId>log4j</artifactId>
+	    	<version>1.2.16</version>
+	    </dependency>
+		<!-- 添加slf4j支持 -->
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.21</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-log4j12</artifactId>
+		    <version>1.7.21</version>
+		</dependency>
+		<!-- 添加springframework支持 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-web</artifactId>
+		    <version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		    <version>${org.springframework.version}</version>
+		</dependency>
+		<!-- 添加commons-lang3支持 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.4</version>
+		</dependency>
+		<!-- 添加shiro支持 https://mvnrepository.com/artifact/org.apache.shiro/shiro-web -->
+		<!-- 参考：http://blog.csdn.net/synshitou/article/details/78079037 -->
+		<dependency>
+		   <groupId>org.apache.shiro</groupId>
+		   <artifactId>shiro-core</artifactId>
+		   <version>${org.apache.shiro.version}</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.apache.shiro</groupId>
+		   <artifactId>shiro-web</artifactId>
+		   <version>${org.apache.shiro.version}</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.apache.shiro</groupId>
+		   <artifactId>shiro-spring</artifactId>
+		   <version>${org.apache.shiro.version}</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.apache.shiro</groupId>
+		   <artifactId>shiro-ehcache</artifactId>
+		   <version>${org.apache.shiro.version}</version>
+		</dependency>
+		<!-- 添加guava支持 https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>24.0-jre</version>
+		</dependency>
+	</dependencies>
+	<build>
+	  <finalName>zhan</finalName>
+	</build>
 </project>
