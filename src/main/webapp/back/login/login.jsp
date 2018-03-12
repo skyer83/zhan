@@ -68,5 +68,9 @@ layui.use(['form', 'layer', 'common'], function(){
 	$imgCaptcha.click();
 });
 </script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+<script type="text/javascript">
+	alert(wx);
+</script>
 </body>
 </html>

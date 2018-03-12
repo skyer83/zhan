@@ -13,4 +13,6 @@ public class BlackConstants {
 	public static final String SUCCESS_KEY = "success";
 	/** 成功键值VALUE_1 */
 	public static final String SUCCESS_1 = "1";
+	/** 失败键值VALUE_1 */
+	public static final String SUCCESS_0 = "0";
 }

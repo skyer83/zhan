@@ -1,0 +1,27 @@
+<!--index.wxml-->
+<view class="container">
+  <view wx:if="{{'0' == openidCheck}}">
+    您还未注册！<br/>
+    清先将该 OPENID <br/>
+    <view>
+      {{openid}}
+    </view>
+    复制到公司收集的EXCEL中
+  </view>
+  <view wx:elif="{{'1' == openidCheck}}">
+    <view class="userinfo">
+      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+      <block wx:else>
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      </block>
+    </view>
+    <view class="usermotto">
+      <text class="user-motto">{{motto}}</text>
+    </view>
+    <view>
+      <button bindtap='test'>测试</button>
+    </view>
+  </view>
+  <view wx:else>做个转圈的效果</view>
+</view>
